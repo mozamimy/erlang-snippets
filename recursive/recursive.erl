@@ -1,5 +1,5 @@
 -module(recursive).
--export([fac/1, fac_short/1, tail_fac/1, len/1, tail_len/1, duplicate/2, tail_duplicate/2, reverse/1, tail_reverse/1, sublist/2, tail_sublist/2, zip/2, lenient_zip/2]).
+-export([fac/1, fac_short/1, tail_fac/1, len/1, tail_len/1, duplicate/2, tail_duplicate/2, reverse/1, tail_reverse/1, sublist/2, tail_sublist/2, zip/2, lenient_zip/2, tail_zip/2, tail_lenient_zip/2]).
 
 fac(N) when N == 0 -> 1;
 fac(N) when N > 0 -> N * fac(N-1).
@@ -47,6 +47,15 @@ tail_sublist([H|T],N,SubList) when N > 0 ->
 zip([],[]) -> [];
 zip([X|Xs],[Y|Ys]) -> [{X,Y}|zip(Xs,Ys)].
 
+tail_zip(Xs,Ys) -> reverse(tail_zip(Xs,Ys,[])).
+tail_zip([],[],Acc) -> Acc;
+tail_zip([X|Xs],[Y|Ys],Acc) -> tail_zip(Xs,Ys,[{X,Y}|Acc]).
+
 lenient_zip([],_) -> [];
 lenient_zip(_,[]) -> [];
 lenient_zip([X|Xs],[Y|Ys]) -> [{X,Y}|lenient_zip(Xs,Ys)].
+
+tail_lenient_zip(Xs,Ys) -> reverse(tail_lenient_zip(Xs,Ys,[])).
+tail_lenient_zip([],_,Acc) -> Acc;
+tail_lenient_zip(_,[],Acc) -> Acc;
+tail_lenient_zip([X|Xs],[Y|Ys],Acc) -> tail_lenient_zip(Xs,Ys,[{X,Y}|Acc]).
