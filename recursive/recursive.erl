@@ -1,5 +1,5 @@
 -module(recursive).
--export([fac/1, fac_short/1, tail_fac/1, len/1, tail_len/1, duplicate/2, tail_duplicate/2]).
+-export([fac/1, fac_short/1, tail_fac/1, len/1, tail_len/1, duplicate/2, tail_duplicate/2, reverse/1, tail_reverse/1]).
 
 fac(N) when N == 0 -> 1;
 fac(N) when N > 0 -> N * fac(N-1).
@@ -26,3 +26,10 @@ tail_duplicate(N,Term) -> tail_duplicate(N,Term,[]).
 tail_duplicate(0,_,List) -> List;
 tail_duplicate(N,Term,List) when N > 0 ->
   tail_duplicate(N-1, Term, [Term|List]).
+
+reverse([]) -> [];
+reverse([H|T]) -> reverse(T) ++ [H].
+
+tail_reverse(L) -> tail_reverse(L,[]).
+tail_reverse([],Acc) -> Acc;
+tail_reverse([H|T],Acc) -> tail_reverse(T,[H|Acc]).
